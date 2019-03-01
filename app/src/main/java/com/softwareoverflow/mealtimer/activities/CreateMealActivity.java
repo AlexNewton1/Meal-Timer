@@ -77,6 +77,9 @@ public class CreateMealActivity extends FragmentActivity implements MealFragment
 
     @Override
     public void onBackButtonClick(View v) {
+        if(createMealViewPager.getCurrentItem() == 0)
+            super.onBackPressed();
+
         mealPagerAdapter.getFragment(createMealViewPager.getCurrentItem()).onBackButtonClicked();
     }
 
@@ -112,4 +115,8 @@ public class CreateMealActivity extends FragmentActivity implements MealFragment
         //TODO - update any (list) adapters...
     }
 
+    @Override
+    public void onBackPressed() {
+        onBackButtonClick(null);
+    }
 }

@@ -18,7 +18,7 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
     MealItemsControllerPagerAdapter adapter;
 
     public MealItemControllerFragment() {
-        super(R.drawable.arrow_right, R.drawable.arrow_left);
+        super(R.drawable.icon_arrow_left, R.drawable.icon_arrow_right);
     }
 
     @Nullable
@@ -45,8 +45,13 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
     public void onBackButtonClicked() {
         int currentItem = mealItemControllerPager.getCurrentItem();
         if(currentItem == 0)
-            super.onBackButtonClicked();
+            mealFragmentNavigatorActivity.onBackButtonClick(null);
         else
             mealItemControllerPager.setCurrentItem(mealItemControllerPager.getCurrentItem() - 1);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.softwareoverflow.mealtimer.fragments.AddMealItemsFragment;
-import com.softwareoverflow.mealtimer.fragments.CreateMealItemFragment;
+import com.softwareoverflow.mealtimer.fragments.mealItems.AddMealItemsFragment;
+import com.softwareoverflow.mealtimer.fragments.mealItems.CreateMealItemFragment;
 import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
-import com.softwareoverflow.mealtimer.fragments.SavedMealItemsFragment;
+import com.softwareoverflow.mealtimer.fragments.mealItems.SavedMealItemsFragment;
 
 public class MealItemsControllerPagerAdapter extends FragmentPagerAdapter {
 

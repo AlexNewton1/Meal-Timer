@@ -9,6 +9,6 @@ import com.softwareoverflow.mealtimer.R;
 public class MealReadyTimeFragment extends MealWizardFragment {
 
     public MealReadyTimeFragment() {
-        super(R.drawable.arrow_right, R.drawable.arrow_left);
+        super(R.drawable.icon_arrow_right, R.drawable.icon_arrow_left);
     }
 }

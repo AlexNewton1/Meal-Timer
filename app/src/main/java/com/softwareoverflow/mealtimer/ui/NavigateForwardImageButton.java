@@ -21,6 +21,6 @@ public class NavigateForwardImageButton extends NavigationImageButton {
 
     @Override
     int getBackgroundId(boolean enabled) {
-        return enabled ? R.drawable.arrow_right : R.drawable.arrow_right_faded;
+        return enabled ? R.drawable.icon_arrow_right : R.drawable.icon_arrow_right_faded;
     }
 }

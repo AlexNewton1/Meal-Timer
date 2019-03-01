@@ -42,7 +42,7 @@ public class MealItemListAdapter extends RecyclerView.Adapter<MealItemListAdapte
                 "%02d:%02d", duration / 60, duration % 60));
 
         // TODO - change to correct icons
-        viewHolder.listIcon.setImageResource(R.drawable.arrow_left);
+        viewHolder.listIcon.setImageResource(R.drawable.icon_arrow_left);
         viewHolder.clockIcon.setImageResource(R.drawable.launcher);
     }
 

@@ -29,7 +29,8 @@ public class SavedMealItemListAdapter extends MealItemListAdapter {
     public void onBindViewHolder(@NonNull MealItemsViewHolder viewHolder, int position) {
         super.onBindViewHolder(viewHolder, position);
 
-
+        //TODO -- get the new approach with nested ViewPagers working
+        //TODO -- Sort out click listener on the recycler views with selectable rows
     }
 
     class SavedMealItemsViewHolder extends MealItemListAdapter.MealItemsViewHolder {

@@ -1,6 +1,7 @@
-package com.softwareoverflow.mealtimer.fragments;
+package com.softwareoverflow.mealtimer.fragments.mealItems;
 
 import com.softwareoverflow.mealtimer.R;
+import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 
 /**
  * This fragment is responsible for linking {@link com.softwareoverflow.mealtimer.meal.MealItemStage}
@@ -9,9 +10,7 @@ import com.softwareoverflow.mealtimer.R;
  */
 public class AddMealItemStagesFragment extends MealWizardFragment {
 
-
     public AddMealItemStagesFragment() {
-        // TODO - change to a "go back" icon and a "tick" icon
-        super(R.drawable.arrow_right_faded, R.drawable.arrow_left);
+        super(R.drawable.icon_tick, R.drawable.icon_undo);
     }
 }

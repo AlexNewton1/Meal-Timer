@@ -1,8 +1,7 @@
-package com.softwareoverflow.mealtimer.fragments;
+package com.softwareoverflow.mealtimer.fragments.mealItems;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.softwareoverflow.mealtimer.R;
+import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 import com.softwareoverflow.mealtimer.meal.MealItem;
 import com.softwareoverflow.mealtimer.ui.listAdapters.MealItemListAdapter;
 
@@ -21,20 +21,18 @@ import java.util.List;
  * This fragment is responsible for handling the adding of
  * {@link com.softwareoverflow.mealtimer.meal.MealItem} objects which create the meal
  */
-public class AddMealItemsFragment extends MealWizardFragment implements View.OnClickListener{
+public class AddMealItemsFragment extends MealWizardFragment {
 
     private List<MealItem> mealItems;
 
     public AddMealItemsFragment() {
-        super(R.drawable.arrow_right_faded, R.drawable.arrow_left);
+        super(R.drawable.icon_arrow_right, R.drawable.icon_arrow_left);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_meal_items, container, false);
-
-        mealFragmentNavigatorActivity.getFAB().setOnClickListener(this);
 
         mealItems = mealFragmentNavigatorActivity.getMeal().getMealItems();
 
@@ -50,36 +48,5 @@ public class AddMealItemsFragment extends MealWizardFragment implements View.OnC
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        FragmentActivity activity = (FragmentActivity) mealFragmentNavigatorActivity;
-
-        switch (activity.getSupportFragmentManager().getBackStackEntryCount()){
-            case 0: // Add meal Items screen
-                SavedMealItemsFragment savedMealItemsFragment = new SavedMealItemsFragment();
-                activity.getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup) getView().getParent()).getId(),
-                                savedMealItemsFragment, savedMealItemsFragment.getClass().toString())
-                        .addToBackStack(savedMealItemsFragment.getClass().toString())
-                        .commit();
-
-                break;
-            case 1: // SavedMealItemsScreen TODO - use startActivtyForResult at this point?
-
-
-                break;
-
-
-            case 2: //Create New Meal Item Screen TODO - use startActivityForResult approach?
-
-
-                break;
-        }
-
-
-
-
     }
 }

@@ -1,4 +1,4 @@
-package com.softwareoverflow.mealtimer.fragments;
+package com.softwareoverflow.mealtimer.fragments.mealItems;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.softwareoverflow.mealtimer.R;
+import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 
 public class CreateMealItemFragment extends MealWizardFragment {
 
     public CreateMealItemFragment() {
-        // TODO - change to a "go back" icon and a "tick" icon
-        super(R.drawable.arrow_right_faded, R.drawable.arrow_left);
+        super(R.drawable.icon_tick, R.drawable.icon_undo);
     }
 
     @Nullable

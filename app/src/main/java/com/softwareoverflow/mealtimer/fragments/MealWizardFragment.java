@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.softwareoverflow.mealtimer.R;
 import com.softwareoverflow.mealtimer.activities.MealFragmentNavigator;
 
 public abstract class MealWizardFragment extends Fragment {
@@ -15,13 +16,14 @@ public abstract class MealWizardFragment extends Fragment {
 
     FloatingActionButton fab;
     ImageButton nextButton, backButton;
-    int nextButtonImage, backButtonImage;
+    int nextButtonImage = R.drawable.icon_arrow_right, backButtonImage = R.drawable.icon_arrow_left;
 
     /**
      * @param nextButtonImage The ID of the background drawable. 0 for not visible.
      * @param backButtonImage The ID of the background drawable. 0 for not visible.
      */
     public MealWizardFragment(int nextButtonImage, int backButtonImage){
+        super();
         this.nextButtonImage = nextButtonImage;
         this.backButtonImage = backButtonImage;
     }
@@ -74,5 +76,25 @@ public abstract class MealWizardFragment extends Fragment {
         else
             backButton.setBackground(getResources().getDrawable(backButtonImage,
                     ((Context) mealFragmentNavigatorActivity).getTheme()));
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isResumed()){
+
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(!getUserVisibleHint()) return;
+
+        setBackButtonImage(backButtonImage);
+        setNextButtonImage(nextButtonImage);
     }
 }

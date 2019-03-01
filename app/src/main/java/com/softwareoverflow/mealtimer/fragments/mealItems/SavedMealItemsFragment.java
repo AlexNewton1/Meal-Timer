@@ -1,9 +1,10 @@
-package com.softwareoverflow.mealtimer.fragments;
+package com.softwareoverflow.mealtimer.fragments.mealItems;
 
-import android.graphics.drawable.TransitionDrawable;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +15,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.softwareoverflow.mealtimer.R;
+import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 import com.softwareoverflow.mealtimer.meal.MealItem;
 import com.softwareoverflow.mealtimer.ui.RecyclerItemClickListener;
+import com.softwareoverflow.mealtimer.ui.animator.TickChangeAnimationListener;
 import com.softwareoverflow.mealtimer.ui.listAdapters.MealItemListAdapter;
+import com.softwareoverflow.mealtimer.ui.listAdapters.SavedMealItemListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +30,18 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Recycl
     private List<MealItem> mealItems = new ArrayList<>();
     private List<MealItem> mealItemsSelected = new ArrayList<>();
 
-    public SavedMealItemsFragment() {
-        super(R.drawable.tick_icon_green, R.drawable.arrow_left);
+    public SavedMealItemsFragment(){
+        super(R.drawable.icon_tick, R.drawable.icon_undo);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_meal_items, container, false);
+        View view = inflater.inflate(R.layout.fragment_saved_meal_items, container, false);
 
         this.mealItems = mealFragmentNavigatorActivity.getMeal().getMealItems(); // TODO - change this to be saved meal items
 
-        final MealItemListAdapter adapter = new MealItemListAdapter(mealItems);
+        final MealItemListAdapter adapter = new SavedMealItemListAdapter(mealItems);
 
         final RecyclerView mealItemsRV = view.findViewById(R.id.fragment_meal_items_recycler_view);
         mealItemsRV.addItemDecoration(new DividerItemDecoration(mealItemsRV.getContext(),
@@ -45,23 +49,26 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Recycl
 
         mealItemsRV.setAdapter(adapter);
         mealItemsRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        mealItemsRV.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        mealItemsRV.setLayoutParams(new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
         mealItemsRV.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mealItemsRV,
                 new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                TransitionDrawable transitionDrawable = (TransitionDrawable)
-                        view.findViewById(R.id.list_view_saved_meal_tick).getBackground();
+                AppCompatImageView tickIcon = view.findViewById(R.id.list_view_saved_meal_tick);
+
+                ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+                animator.setDuration(500);
+                animator.addUpdateListener(new TickChangeAnimationListener(tickIcon));
 
                 MealItem mealItem = mealItems.get(position);
                 if(mealItemsSelected.contains(mealItem)){
                    mealItemsSelected.remove(mealItem);
-                   transitionDrawable.reverseTransition(250);
+                   animator.reverse();
                 } else {
                     mealItemsSelected.add(mealItem);
-                    transitionDrawable.startTransition(250);
+                    animator.start();
                 }
             }
 
