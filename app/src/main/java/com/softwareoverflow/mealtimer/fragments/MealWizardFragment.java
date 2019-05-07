@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.softwareoverflow.mealtimer.MealWizardNavigator;
 import com.softwareoverflow.mealtimer.R;
-import com.softwareoverflow.mealtimer.activities.MealFragmentNavigator;
 
 public abstract class MealWizardFragment extends Fragment {
 
-    public MealFragmentNavigator mealFragmentNavigatorActivity;
+    public MealWizardNavigator mealWizardNavigatorActivity;
 
     FloatingActionButton fab;
     ImageButton nextButton, backButton;
@@ -33,10 +33,10 @@ public abstract class MealWizardFragment extends Fragment {
         super.onAttach(context);
         Log.d("fragDebug", "onAttach");
 
-        this.mealFragmentNavigatorActivity = (MealFragmentNavigator) context;
-        fab = mealFragmentNavigatorActivity.getFAB();
-        nextButton = mealFragmentNavigatorActivity.getNextIcon();
-        backButton = mealFragmentNavigatorActivity.getBackIcon();
+        this.mealWizardNavigatorActivity = (MealWizardNavigator) context;
+        fab = mealWizardNavigatorActivity.getFAB();
+        nextButton = mealWizardNavigatorActivity.getNextIcon();
+        backButton = mealWizardNavigatorActivity.getBackIcon();
 
         setNextButtonImage(nextButtonImage);
         setBackButtonImage(backButtonImage);
@@ -47,7 +47,7 @@ public abstract class MealWizardFragment extends Fragment {
      * Any special cases are handled in the individual fragment.
      */
     public void onNextButtonClicked(){
-        mealFragmentNavigatorActivity.nextWizardStep();
+        mealWizardNavigatorActivity.nextWizardStep();
     }
 
     /**
@@ -55,7 +55,7 @@ public abstract class MealWizardFragment extends Fragment {
      * Any special cases are handled in the individual fragment.
      */
     public void onBackButtonClicked(){
-        mealFragmentNavigatorActivity.previousWizardStep();
+        mealWizardNavigatorActivity.previousWizardStep();
     }
 
     public void setNextButtonImage(int nextButtonImage){
@@ -65,7 +65,7 @@ public abstract class MealWizardFragment extends Fragment {
             nextButton.setVisibility(View.GONE);
         else
             nextButton.setBackground(getResources().getDrawable(nextButtonImage,
-                    ((Context) mealFragmentNavigatorActivity).getTheme()));
+                    ((Context) mealWizardNavigatorActivity).getTheme()));
     }
 
     public void setBackButtonImage(int backButtonImage){
@@ -75,7 +75,7 @@ public abstract class MealWizardFragment extends Fragment {
             backButton.setVisibility(View.GONE);
         else
             backButton.setBackground(getResources().getDrawable(backButtonImage,
-                    ((Context) mealFragmentNavigatorActivity).getTheme()));
+                    ((Context) mealWizardNavigatorActivity).getTheme()));
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.softwareoverflow.mealtimer.meal;
 
 import android.support.annotation.Nullable;
 
+import java.util.Objects;
+
 public class MealItemStage {
 
     private String stageName;
@@ -29,5 +31,10 @@ public class MealItemStage {
 
         MealItemStage other = (MealItemStage) obj;
         return (this.stageName.equals(other.stageName) && this.time == other.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stageName, time);
     }
 }

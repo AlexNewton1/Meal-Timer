@@ -26,6 +26,10 @@ public class Meal {
         this.mealItems = mealItems;
     }
 
+    public void addMealItems(List<MealItem> mealItems){
+        this.mealItems.addAll(0, (mealItems));
+    }
+
     public void removeMealItem(MealItem mealItem){
         mealItems.remove(mealItem);
     }

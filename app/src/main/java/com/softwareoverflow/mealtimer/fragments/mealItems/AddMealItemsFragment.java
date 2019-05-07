@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class AddMealItemsFragment extends MealWizardFragment {
 
-    private List<MealItem> mealItems;
+    private MealItemListAdapter listAdapter;
 
     public AddMealItemsFragment() {
         super(R.drawable.icon_arrow_right, R.drawable.icon_arrow_left);
@@ -34,19 +34,26 @@ public class AddMealItemsFragment extends MealWizardFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_meal_items, container, false);
 
-        mealItems = mealFragmentNavigatorActivity.getMeal().getMealItems();
-
-        MealItemListAdapter adapter = new MealItemListAdapter(mealItems);
+        List<MealItem>  mealItems = mealWizardNavigatorActivity.getMeal().getMealItems();
+        listAdapter = new MealItemListAdapter(mealItems);
 
         RecyclerView mealItemsRV = view.findViewById(R.id.fragment_meal_items_recycler_view);
         mealItemsRV.addItemDecoration(new DividerItemDecoration(mealItemsRV.getContext(),
                 DividerItemDecoration.VERTICAL));
 
-        mealItemsRV.setAdapter(adapter);
+        mealItemsRV.setAdapter(listAdapter);
         mealItemsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mealItemsRV.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getUserVisibleHint())
+            listAdapter.notifyDataSetChanged();
     }
 }

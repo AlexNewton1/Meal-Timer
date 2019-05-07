@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MealItem {
 
@@ -52,6 +53,11 @@ public class MealItem {
             return false;
 
         MealItem other = (MealItem) obj;
-        return (this.stages == other.stages && this.itemName.equals(other.itemName));
+        return this.itemName.equals(other.itemName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemName, stages);
     }
 }

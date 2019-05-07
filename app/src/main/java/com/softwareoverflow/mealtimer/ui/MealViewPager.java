@@ -31,8 +31,4 @@ public class MealViewPager extends ViewPager {
         // Don't allow swiping on the viewPager to change views
         return false;
     }
-
-
-
-
 }

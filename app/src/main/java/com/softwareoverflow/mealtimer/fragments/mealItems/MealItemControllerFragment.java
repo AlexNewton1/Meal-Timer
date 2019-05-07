@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.softwareoverflow.mealtimer.FragmentCancellable;
+import com.softwareoverflow.mealtimer.MealWizardNavigator;
 import com.softwareoverflow.mealtimer.R;
 import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 import com.softwareoverflow.mealtimer.ui.MealViewPager;
@@ -31,7 +33,7 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
         adapter = new MealItemsControllerPagerAdapter(getActivity().getSupportFragmentManager());
         mealItemControllerPager.setAdapter(adapter);
 
-        mealFragmentNavigatorActivity.getFAB().setOnClickListener(this);
+        mealWizardNavigatorActivity.getFAB().setOnClickListener(this);
 
         return view;
     }
@@ -44,14 +46,26 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
     @Override
     public void onBackButtonClicked() {
         int currentItem = mealItemControllerPager.getCurrentItem();
-        if(currentItem == 0)
-            mealFragmentNavigatorActivity.onBackButtonClick(null);
+
+        MealWizardFragment fragment = adapter.getFragment(currentItem);
+        if(fragment instanceof FragmentCancellable)
+            ((FragmentCancellable) fragment).onNegativeButtonClicked(mealItemControllerPager);
+        else if(currentItem == 0)
+            mealWizardNavigatorActivity.previousWizardStep();
         else
-            mealItemControllerPager.setCurrentItem(mealItemControllerPager.getCurrentItem() - 1);
+            mealItemControllerPager.setCurrentItem(currentItem - 1);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onNextButtonClicked() {
+        int currentItem = mealItemControllerPager.getCurrentItem();
+
+        MealWizardFragment fragment = adapter.getFragment(currentItem);
+        if(fragment instanceof FragmentCancellable)
+            ((FragmentCancellable) fragment).onPositiveButtonClicked(mealItemControllerPager);
+        else if (currentItem == 0)
+            mealWizardNavigatorActivity.nextWizardStep();
+        else
+            mealItemControllerPager.setCurrentItem(currentItem + 1);
     }
 }
