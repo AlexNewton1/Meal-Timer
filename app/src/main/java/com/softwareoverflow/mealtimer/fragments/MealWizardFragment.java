@@ -1,6 +1,8 @@
 package com.softwareoverflow.mealtimer.fragments;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +19,10 @@ public abstract class MealWizardFragment extends Fragment {
     FloatingActionButton fab;
     ImageButton nextButton, backButton;
     int nextButtonImage = R.drawable.icon_arrow_right, backButtonImage = R.drawable.icon_arrow_left;
+
+    public MealWizardFragment(){
+        super();
+    }
 
     /**
      * @param nextButtonImage The ID of the background drawable. 0 for not visible.
@@ -37,9 +43,12 @@ public abstract class MealWizardFragment extends Fragment {
         fab = mealWizardNavigatorActivity.getFAB();
         nextButton = mealWizardNavigatorActivity.getNextIcon();
         backButton = mealWizardNavigatorActivity.getBackIcon();
+    }
 
-        setNextButtonImage(nextButtonImage);
-        setBackButtonImage(backButtonImage);
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setUserVisibleHint(false);
     }
 
     /**
@@ -82,19 +91,9 @@ public abstract class MealWizardFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if (isVisibleToUser && isResumed()){
-
-            onResume();
+        if(isVisibleToUser && isAdded()){
+            setBackButtonImage(backButtonImage);
+            setNextButtonImage(nextButtonImage);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(!getUserVisibleHint()) return;
-
-        setBackButtonImage(backButtonImage);
-        setNextButtonImage(nextButtonImage);
     }
 }

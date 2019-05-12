@@ -25,10 +25,6 @@ public class AddMealItemsFragment extends MealWizardFragment {
 
     private MealItemListAdapter listAdapter;
 
-    public AddMealItemsFragment() {
-        super(R.drawable.icon_arrow_right, R.drawable.icon_arrow_left);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +43,13 @@ public class AddMealItemsFragment extends MealWizardFragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && listAdapter != null)
+            listAdapter.notifyDataSetChanged();
     }
 
     @Override

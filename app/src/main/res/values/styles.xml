@@ -8,5 +8,10 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:editTextColor">@android:color/white</item>
         <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Picker" parent="AppTheme" >
+        <item name="android:textSize">60dp</item>
     </style>
 </resources>

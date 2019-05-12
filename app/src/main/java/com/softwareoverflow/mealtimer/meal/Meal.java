@@ -7,8 +7,9 @@ import java.util.List;
 
 public class Meal {
 
+    private int mealId;
     private String mealName;
-    private List<MealItem> mealItems = new ArrayList<MealItem>();
+    private List<MealItem> mealItems = new ArrayList<>();
 
     public String getMealName() {
         return mealName;
@@ -34,6 +35,20 @@ public class Meal {
         mealItems.remove(mealItem);
     }
 
+    /**
+     * @return - the total time for the meal in minutes
+     */
+    public int getMealDuration(){
+        int time = 0;
+        for(MealItem item : mealItems){
+            int mealItemTime = item.getDuration();
+            if(mealItemTime > time)
+                time = mealItemTime;
+        }
+
+        return time;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj == null)
@@ -42,6 +57,6 @@ public class Meal {
             return false;
 
         Meal other = (Meal) obj;
-        return (this.mealItems == other.mealItems && this.mealName.equals(other.mealName));
+        return (this.mealItems.equals(other.mealItems) && this.mealName.equals(other.mealName));
     }
 }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.softwareoverflow.mealtimer.FragmentCancellable;
-import com.softwareoverflow.mealtimer.MealWizardNavigator;
 import com.softwareoverflow.mealtimer.R;
 import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 import com.softwareoverflow.mealtimer.ui.MealViewPager;
@@ -18,10 +17,6 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
 
     MealViewPager mealItemControllerPager;
     MealItemsControllerPagerAdapter adapter;
-
-    public MealItemControllerFragment() {
-        super(R.drawable.icon_arrow_left, R.drawable.icon_arrow_right);
-    }
 
     @Nullable
     @Override
