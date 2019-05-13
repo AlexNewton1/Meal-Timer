@@ -1,13 +1,15 @@
 package com.softwareoverflow.mealtimer.meal;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Meal {
 
-    private int mealId;
+    private Integer mealId = null;
     private String mealName;
     private List<MealItem> mealItems = new ArrayList<>();
 
@@ -23,7 +25,7 @@ public class Meal {
         return mealItems;
     }
 
-    public void setMealItems(List<MealItem> mealItems) {
+    public void setMealItems(@NonNull List<MealItem> mealItems) {
         this.mealItems = mealItems;
     }
 
@@ -36,17 +38,14 @@ public class Meal {
     }
 
     /**
-     * @return - the total time for the meal in minutes
+     * @return - the total time for the meal in minutes.
+     * This is equivalent to the {@link MealItem} with the largest duration as meal items
+     * will be completed in parallel
      */
     public int getMealDuration(){
-        int time = 0;
-        for(MealItem item : mealItems){
-            int mealItemTime = item.getDuration();
-            if(mealItemTime > time)
-                time = mealItemTime;
-        }
-
-        return time;
+        ArrayList<MealItem> copy = new ArrayList<>(getMealItems());
+        Collections.sort(copy);
+        return copy.get(0).getDuration();
     }
 
     @Override
@@ -57,6 +56,6 @@ public class Meal {
             return false;
 
         Meal other = (Meal) obj;
-        return (this.mealItems.equals(other.mealItems) && this.mealName.equals(other.mealName));
+        return (this.mealItems.equals(other.mealItems));
     }
 }

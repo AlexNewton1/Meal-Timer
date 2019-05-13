@@ -1,23 +1,30 @@
 package com.softwareoverflow.mealtimer.meal;
 
+import com.softwareoverflow.mealtimer.meal.stubData.StubMealData;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class MealItemStageTest {
 
-    private MealItemStage mealItemStage;
+    private StubMealData stubMealData = new StubMealData();
+    private MealItemStage mealItemStage, duplicateStage;
 
     @Before
     public void setUp(){
-        mealItemStage = new MealItemStage("Test", 5);
+        mealItemStage = stubMealData.getStubMealItemStage();
+        duplicateStage = new MealItemStage(mealItemStage.getStageName(), mealItemStage.getTime());
     }
 
     @Test
     public void getStageName() {
-        Assert.assertEquals("Test", mealItemStage.getStageName());
+        Assert.assertEquals("Stage 1", mealItemStage.getStageName());
     }
 
     @Test
@@ -26,9 +33,18 @@ public class MealItemStageTest {
     }
 
     @Test
-    public void equals() {
-        assertEquals("Failed on equals", mealItemStage, new MealItemStage("Test", 5));
+    public void checkAreEqual() {
+        assertEquals("Failed on equals", mealItemStage, duplicateStage);
         assertNotEquals(mealItemStage, null);
         assertNotEquals(mealItemStage, "FAIL");
+
+        List<MealItemStage> stages = stubMealData.getStubMealItemStages(2);
+        assertNotEquals(stages.get(0), stages.get(1));
+    }
+
+    @Test
+    public void checkSameHashCodes(){
+        assertEquals("Should return same hash codes",
+                mealItemStage.hashCode(), duplicateStage.hashCode());
     }
 }

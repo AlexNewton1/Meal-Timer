@@ -6,20 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MealItem {
+/**
+ * Represents a single part of the meal. Each MealItem can contain 1 or more
+ * {@link MealItemStage} objects.
+ */
+public class MealItem implements Comparable<MealItem> {
 
     private String itemName;
     private List<MealItemStage> stages = new ArrayList<>();
 
-    public MealItem(String name){
+    /**
+     * @param name - name of the MealItem. Acts as the unique identifier so no 2 MealItem objects
+     *             can have the same name.
+     */
+    public MealItem(String name) {
         this.itemName = name;
     }
 
-    public void addStage(MealItemStage stage){
+    public void addStage(MealItemStage stage) {
         stages.add(stage);
     }
 
-    public void removeStage(MealItemStage stage){
+    //TODO - uncomment when needed, and write unit tests as well.
+    /*public void removeStage(MealItemStage stage){
         stages.remove(stage);
     }
 
@@ -27,18 +36,23 @@ public class MealItem {
         stages.remove(stage);
         stages.add(newPos, stage);
     }
+    */
 
     public List<MealItemStage> getStages() {
         return stages;
     }
 
-    public int getNumStages() { return stages.size(); }
+    public int getNumStages() {
+        return stages.size();
+    }
 
-    public String getName(){ return itemName; }
+    public String getName() {
+        return itemName;
+    }
 
     public int getDuration() {
         int duration = 0;
-        for(MealItemStage stage : stages){
+        for (MealItemStage stage : stages) {
             duration += stage.getTime();
         }
 
@@ -59,5 +73,10 @@ public class MealItem {
     @Override
     public int hashCode() {
         return Objects.hash(itemName, stages);
+    }
+
+    @Override
+    public int compareTo(MealItem other) {
+        return Integer.compare(other.getDuration(), this.getDuration());
     }
 }
