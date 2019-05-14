@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -14,13 +13,13 @@ import com.softwareoverflow.mealtimer.R;
 
 public abstract class MealWizardFragment extends Fragment {
 
-    public MealWizardNavigator mealWizardNavigatorActivity;
+    public MealWizardNavigator mealWizardActivity;
 
     FloatingActionButton fab;
     ImageButton nextButton, backButton;
-    int nextButtonImage = R.drawable.icon_arrow_right, backButtonImage = R.drawable.icon_arrow_left;
+    int nextButtonImage = R.drawable.icon_tick, backButtonImage = R.drawable.icon_undo;
 
-    public MealWizardFragment(){
+    public MealWizardFragment() {
         super();
     }
 
@@ -28,7 +27,7 @@ public abstract class MealWizardFragment extends Fragment {
      * @param nextButtonImage The ID of the background drawable. 0 for not visible.
      * @param backButtonImage The ID of the background drawable. 0 for not visible.
      */
-    public MealWizardFragment(int nextButtonImage, int backButtonImage){
+    public MealWizardFragment(int nextButtonImage, int backButtonImage) {
         super();
         this.nextButtonImage = nextButtonImage;
         this.backButtonImage = backButtonImage;
@@ -37,12 +36,11 @@ public abstract class MealWizardFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d("fragDebug", "onAttach");
 
-        this.mealWizardNavigatorActivity = (MealWizardNavigator) context;
-        fab = mealWizardNavigatorActivity.getFAB();
-        nextButton = mealWizardNavigatorActivity.getNextIcon();
-        backButton = mealWizardNavigatorActivity.getBackIcon();
+        this.mealWizardActivity = (MealWizardNavigator) context;
+        fab = mealWizardActivity.getFAB();
+        nextButton = mealWizardActivity.getNextIcon();
+        backButton = mealWizardActivity.getBackIcon();
     }
 
     @Override
@@ -52,46 +50,38 @@ public abstract class MealWizardFragment extends Fragment {
     }
 
     /**
-     * By default the next button will cause the activity to step through the wizard.
+     * By default the next button will cause the activity to go to the next stage in the wizard.
      * Any special cases are handled in the individual fragment.
      */
-    public void onNextButtonClicked(){
-        mealWizardNavigatorActivity.nextWizardStep();
-    }
-
-    /**
-     * By default the back button will cause the activity to go to the previous stage in the wizard.
-     * Any special cases are handled in the individual fragment.
-     */
-    public void onBackButtonClicked(){
-        mealWizardNavigatorActivity.previousWizardStep();
-    }
-
-    public void setNextButtonImage(int nextButtonImage){
+    public void setNextButtonImage(int nextButtonImage) {
         this.nextButtonImage = nextButtonImage;
 
-        if(nextButtonImage == 0)
+        if (nextButtonImage == 0)
             nextButton.setVisibility(View.GONE);
-        else
+        else{
+            nextButton.setVisibility(View.VISIBLE);
             nextButton.setBackground(getResources().getDrawable(nextButtonImage,
-                    ((Context) mealWizardNavigatorActivity).getTheme()));
+                    ((Context) mealWizardActivity).getTheme()));
+        }
     }
 
-    public void setBackButtonImage(int backButtonImage){
+    public void setBackButtonImage(int backButtonImage) {
         this.backButtonImage = backButtonImage;
 
-        if(backButtonImage == 0)
+        if (backButtonImage == 0)
             backButton.setVisibility(View.GONE);
-        else
+        else {
+            backButton.setVisibility(View.VISIBLE);
             backButton.setBackground(getResources().getDrawable(backButtonImage,
-                    ((Context) mealWizardNavigatorActivity).getTheme()));
+                    ((Context) mealWizardActivity).getTheme()));
+        }
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if(isVisibleToUser && isAdded()){
+        if (isVisibleToUser && isAdded()) {
             setBackButtonImage(backButtonImage);
             setNextButtonImage(nextButtonImage);
         }

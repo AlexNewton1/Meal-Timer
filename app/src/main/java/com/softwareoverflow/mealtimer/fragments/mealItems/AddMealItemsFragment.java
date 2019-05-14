@@ -28,9 +28,12 @@ public class AddMealItemsFragment extends MealWizardFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setBackButtonImage(0); // Hide the back button
+        setNextButtonImage(0); // Hide the finish button until meal items are added
+
         View view = inflater.inflate(R.layout.fragment_add_meal_items, container, false);
 
-        List<MealItem>  mealItems = mealWizardNavigatorActivity.getMeal().getMealItems();
+        List<MealItem>  mealItems = mealWizardActivity.getMeal().getMealItems();
         listAdapter = new MealItemListAdapter(mealItems);
 
         RecyclerView mealItemsRV = view.findViewById(R.id.fragment_meal_items_recycler_view);
@@ -48,8 +51,12 @@ public class AddMealItemsFragment extends MealWizardFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
         if(isVisibleToUser && listAdapter != null)
             listAdapter.notifyDataSetChanged();
+
+        if(listAdapter!=null && listAdapter.getItemCount() > 0)
+            setNextButtonImage(R.drawable.icon_tick);
     }
 
     @Override

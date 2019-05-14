@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CreateMealActivity" />
+        <activity android:name=".activities.MealWizardActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

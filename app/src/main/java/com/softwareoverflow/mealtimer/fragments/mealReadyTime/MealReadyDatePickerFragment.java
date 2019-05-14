@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.softwareoverflow.mealtimer.R;
-import com.softwareoverflow.mealtimer.activities.MealActivity;
 
 import java.util.Calendar;
 
@@ -42,7 +41,8 @@ public class MealReadyDatePickerFragment extends Fragment {
         super.onAttach(context);
 
         earliestReadyTime = Calendar.getInstance();
-        earliestReadyTime.add(Calendar.MINUTE, ((MealActivity) getActivity()).getMeal().getMealDuration());
+        //TODO - update this code to reference local Meal object
+        //earliestReadyTime.add(Calendar.MINUTE, ((MealActivity) getActivity()).getMeal().getMealDuration());
 
         dateChangedListener = (DatePicker.OnDateChangedListener) getParentFragment();
     }

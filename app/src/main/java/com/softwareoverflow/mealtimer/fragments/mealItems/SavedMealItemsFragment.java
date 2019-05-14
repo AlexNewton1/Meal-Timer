@@ -40,10 +40,6 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
     private MealItemListAdapter adapter;
     private  RecyclerView mealItemsRV;
 
-    public SavedMealItemsFragment(){
-        super(R.drawable.icon_tick, R.drawable.icon_undo);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +55,7 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
     }
 
     private void setupRecyclerView(View view){
-        adapter = new SavedMealItemListAdapter(savedMealItems, mealWizardNavigatorActivity.getMeal());
+        adapter = new SavedMealItemListAdapter(savedMealItems, mealWizardActivity.getMeal());
 
         mealItemsRV = view.findViewById(R.id.fragment_meal_items_recycler_view);
 
@@ -162,7 +158,7 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
 
     @Override
     public void onPositiveButtonClicked(ViewPager viewPager) {
-        Meal meal = mealWizardNavigatorActivity.getMeal();
+        Meal meal = mealWizardActivity.getMeal();
         meal.addMealItems(mealItemsToAdd);
         for (MealItem toRemove : mealItemsToRemove)
             meal.getMealItems().remove(toRemove);

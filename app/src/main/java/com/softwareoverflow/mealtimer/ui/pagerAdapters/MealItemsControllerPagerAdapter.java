@@ -26,7 +26,7 @@ public class MealItemsControllerPagerAdapter extends FragmentPagerAdapter {
             case 0: return new AddMealItemsFragment();
             case 1: return new SavedMealItemsFragment();
             case 2: return new CreateMealItemFragment();
-            //TODO - case 2: return new CreateMealItemStageFragment(); // Is this needed??
+            //TODO - case x: return new CreateMealItemStageFragment();??
             default: return null;
         }
     }

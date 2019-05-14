@@ -2,11 +2,7 @@ package com.softwareoverflow.mealtimer.fragments.mealReadyTime;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +11,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.softwareoverflow.mealtimer.R;
-import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
-import com.softwareoverflow.mealtimer.ui.pagerAdapters.MealReadyDateTimePagerAdapter;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -26,41 +20,42 @@ import java.util.Locale;
  * This fragment is responsible for allowing the user to enter the time they want their
  * {@link com.softwareoverflow.mealtimer.meal.Meal} to be ready for
  */
-public class MealReadyDateTimeFragment extends MealWizardFragment implements DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
+// TODO - this most likely will become it's own activity
+public class MealReadyDateTimeFragment extends Fragment implements DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 
     private TextView summaryTextView;
     private Calendar chosenReadyTime = Calendar.getInstance();
 
-    public MealReadyDateTimeFragment() {
-        super(R.drawable.icon_arrow_right, R.drawable.icon_arrow_left);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //TODO - fix all this!
+/*
         chosenReadyTime = Calendar.getInstance();
-        int mealTime = mealWizardNavigatorActivity.getMeal().getMealDuration();
+
+        int mealTime = mealWizardActivity.getMeal().getMealDuration();
         chosenReadyTime.add(Calendar.MINUTE, mealTime);
-
+*/
         View view = inflater.inflate(R.layout.fragment_meal_ready_time, container, false);
-        ViewPager pager = view.findViewById(R.id.meal_ready_date_time_view_pager);
-        setupViewPager(pager);
+//        ViewPager pager = view.findViewById(R.id.meal_ready_date_time_view_pager);
+//       setupViewPager(pager);
 
-        TabLayout tabLayout = view.findViewById(R.id.meal_ready_date_time_tabs);
-        tabLayout.setupWithViewPager(pager);
+//        TabLayout tabLayout = view.findViewById(R.id.meal_ready_date_time_tabs);
+//        tabLayout.setupWithViewPager(pager);
 
-        summaryTextView = view.findViewById(R.id.meal_ready_time_summary);
+//        summaryTextView = view.findViewById(R.id.meal_ready_time_summary);
 
         return view;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        FragmentManager fm = ((FragmentActivity) mealWizardNavigatorActivity).getSupportFragmentManager();
+    /*private void setupViewPager(ViewPager viewPager) {
+        FragmentManager fm = ((FragmentActivity) mealWizardActivity).getSupportFragmentManager();
         MealReadyDateTimePagerAdapter adapter = new MealReadyDateTimePagerAdapter(fm);
         adapter.setDateChangedListener(this);
         adapter.setTimeChangedListener(this);
         viewPager.setAdapter(adapter);
-    }
+    }*/
 
     @Override
     public void onAttachFragment(Fragment childFragment) {

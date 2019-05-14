@@ -28,7 +28,7 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
         adapter = new MealItemsControllerPagerAdapter(getActivity().getSupportFragmentManager());
         mealItemControllerPager.setAdapter(adapter);
 
-        mealWizardNavigatorActivity.getFAB().setOnClickListener(this);
+        mealWizardActivity.getFAB().setOnClickListener(this);
 
         return view;
     }
@@ -46,7 +46,7 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
         if(fragment instanceof FragmentCancellable)
             ((FragmentCancellable) fragment).onNegativeButtonClicked(mealItemControllerPager);
         else if(currentItem == 0)
-            mealWizardNavigatorActivity.previousWizardStep();
+            mealWizardActivity.previousWizardStep();
         else
             mealItemControllerPager.setCurrentItem(currentItem - 1);
     }
@@ -59,8 +59,13 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
         if(fragment instanceof FragmentCancellable)
             ((FragmentCancellable) fragment).onPositiveButtonClicked(mealItemControllerPager);
         else if (currentItem == 0)
-            mealWizardNavigatorActivity.nextWizardStep();
+            mealWizardActivity.nextWizardStep();
         else
             mealItemControllerPager.setCurrentItem(currentItem + 1);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 }

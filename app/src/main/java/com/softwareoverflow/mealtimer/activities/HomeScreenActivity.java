@@ -19,7 +19,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     public void createNewMeal(View v){
-        startActivity(new Intent(this, CreateMealActivity.class));
+        startActivity(new Intent(this, MealWizardActivity.class));
     }
 
     public void loadSavedMeal(View v){

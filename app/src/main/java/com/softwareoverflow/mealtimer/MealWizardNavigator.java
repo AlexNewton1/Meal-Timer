@@ -17,8 +17,6 @@ public interface MealWizardNavigator {
 
     ImageButton getBackIcon();
 
-    void setMeal(Meal meal);
-
     Meal getMeal();
 
 }
