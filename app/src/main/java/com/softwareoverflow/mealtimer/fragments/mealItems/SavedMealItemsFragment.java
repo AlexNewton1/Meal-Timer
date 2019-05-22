@@ -9,12 +9,14 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 
+import com.softwareoverflow.mealtimer.DeleteRestoreListAdapterListener;
 import com.softwareoverflow.mealtimer.FragmentCancellable;
 import com.softwareoverflow.mealtimer.R;
 import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
@@ -22,6 +24,7 @@ import com.softwareoverflow.mealtimer.meal.Meal;
 import com.softwareoverflow.mealtimer.meal.MealItem;
 import com.softwareoverflow.mealtimer.meal.MealItemStage;
 import com.softwareoverflow.mealtimer.ui.RecyclerItemClickListener;
+import com.softwareoverflow.mealtimer.ui.SwipeToDeleteCallback;
 import com.softwareoverflow.mealtimer.ui.animator.TickChangeAnimationListener;
 import com.softwareoverflow.mealtimer.ui.listAdapters.MealItemListAdapter;
 import com.softwareoverflow.mealtimer.ui.listAdapters.SavedMealItemListAdapter;
@@ -29,7 +32,7 @@ import com.softwareoverflow.mealtimer.ui.listAdapters.SavedMealItemListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedMealItemsFragment extends MealWizardFragment implements FragmentCancellable {
+public class SavedMealItemsFragment extends MealWizardFragment implements FragmentCancellable, DeleteRestoreListAdapterListener<MealItem> {
 
     private List<MealItem> savedMealItems = new ArrayList<>();
 
@@ -38,7 +41,7 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
 
     private SearchView searchView;
     private MealItemListAdapter adapter;
-    private  RecyclerView mealItemsRV;
+    private RecyclerView mealItemsRV;
 
     @Nullable
     @Override
@@ -54,8 +57,9 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
         return view;
     }
 
-    private void setupRecyclerView(View view){
-        adapter = new SavedMealItemListAdapter(savedMealItems, mealWizardActivity.getMeal());
+    private void setupRecyclerView(View view) {
+        adapter = new SavedMealItemListAdapter(
+                getActivity(), savedMealItems, mealWizardActivity.getMeal(), this);
 
         mealItemsRV = view.findViewById(R.id.fragment_meal_items_recycler_view);
 
@@ -65,7 +69,10 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
         mealItemsRV.setAdapter(adapter);
         mealItemsRV.setLayoutManager(new LinearLayoutManager(getContext()));
         mealItemsRV.setLayoutParams(new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(mealItemsRV);
 
         mealItemsRV.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), mealItemsRV,
                 new RecyclerItemClickListener.OnItemClickListener() {
@@ -80,15 +87,15 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
 
                         MealItem mealItem = savedMealItems.get(position);
 
-                        if(tickIcon.getAlpha() == 1.0f){ // remove meal item from meal
-                            if(mealItemsToAdd.contains(mealItem))
+                        if (tickIcon.getAlpha() == 1.0f) { // remove meal item from meal
+                            if (mealItemsToAdd.contains(mealItem))
                                 mealItemsToAdd.remove(mealItem);
                             else
                                 mealItemsToRemove.add(mealItem);
 
                             animator.reverse();
-                        } else if (tickIcon.getAlpha() == 0f){ // add meal item
-                            if(mealItemsToRemove.contains(mealItem))
+                        } else if (tickIcon.getAlpha() == 0f) { // add meal item
+                            if (mealItemsToRemove.contains(mealItem))
                                 mealItemsToRemove.remove(mealItem);
                             else
                                 mealItemsToAdd.add(mealItem);
@@ -105,7 +112,7 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
     }
 
     //TODO - change this method to get real meal items rather than a stub!
-    private List<MealItem> getSavedMealItems(){
+    private List<MealItem> getSavedMealItems() {
         MealItemStage stage1 = new MealItemStage("Stage 1", 25);
         MealItemStage stage2 = new MealItemStage("Stage 2", 35);
         MealItemStage stage3 = new MealItemStage("Stage 3", 60);
@@ -138,12 +145,12 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
     public void onResume() {
         super.onResume();
 
-        if(getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             adapter.notifyDataSetChanged();
             mealItemsRV.setAdapter(adapter);
         }
 
-        if(searchView != null)
+        if (searchView != null)
             searchView.clearFocus();
     }
 
@@ -168,4 +175,15 @@ public class SavedMealItemsFragment extends MealWizardFragment implements Fragme
     }
 
 
+    @Override
+    public void onItemRestored(MealItem item) {
+        mealItemsToRemove.remove(item);
+    }
+
+    @Override
+    public void onItemDeleted(MealItem item) {
+        if(!mealItemsToRemove.contains(item)){
+            mealItemsToRemove.add(item);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.FrameLayout;
 import com.softwareoverflow.mealtimer.R;
 import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 import com.softwareoverflow.mealtimer.meal.MealItem;
+import com.softwareoverflow.mealtimer.ui.SwipeToDeleteCallback;
 import com.softwareoverflow.mealtimer.ui.listAdapters.MealItemListAdapter;
 
 import java.util.List;
@@ -33,12 +35,15 @@ public class AddMealItemsFragment extends MealWizardFragment {
 
         View view = inflater.inflate(R.layout.fragment_add_meal_items, container, false);
 
-        List<MealItem>  mealItems = mealWizardActivity.getMeal().getMealItems();
-        listAdapter = new MealItemListAdapter(mealItems);
+        List<MealItem> mealItems = mealWizardActivity.getMeal().getMealItems();
+        listAdapter = new MealItemListAdapter(getActivity(), mealItems);
 
         RecyclerView mealItemsRV = view.findViewById(R.id.fragment_meal_items_recycler_view);
         mealItemsRV.addItemDecoration(new DividerItemDecoration(mealItemsRV.getContext(),
                 DividerItemDecoration.VERTICAL));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(listAdapter));
+        itemTouchHelper.attachToRecyclerView(mealItemsRV);
 
         mealItemsRV.setAdapter(listAdapter);
         mealItemsRV.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -52,18 +57,10 @@ public class AddMealItemsFragment extends MealWizardFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if(isVisibleToUser && listAdapter != null)
+        if (isVisibleToUser && listAdapter != null)
             listAdapter.notifyDataSetChanged();
 
-        if(listAdapter!=null && listAdapter.getItemCount() > 0)
+        if (listAdapter != null && listAdapter.getItemCount() > 0)
             setNextButtonImage(R.drawable.icon_tick);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(getUserVisibleHint())
-            listAdapter.notifyDataSetChanged();
     }
 }

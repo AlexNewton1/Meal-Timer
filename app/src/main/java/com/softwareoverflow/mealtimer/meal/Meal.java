@@ -30,7 +30,9 @@ public class Meal {
     }
 
     public void addMealItems(List<MealItem> mealItems){
-        this.mealItems.addAll(0, (mealItems));
+        int position = mealItems.size() - 1;
+        if(position < 0) position = 0;
+        this.mealItems.addAll(position, (mealItems)); // Add to end of list
     }
 
     public void removeMealItem(MealItem mealItem){

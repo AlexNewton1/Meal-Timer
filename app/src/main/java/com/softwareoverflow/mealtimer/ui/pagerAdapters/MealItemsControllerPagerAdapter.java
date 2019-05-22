@@ -8,7 +8,7 @@ import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.softwareoverflow.mealtimer.fragments.mealItems.AddMealItemsFragment;
-import com.softwareoverflow.mealtimer.fragments.mealItems.CreateMealItemFragment;
+import com.softwareoverflow.mealtimer.fragments.mealItems.EditMealItemFragment;
 import com.softwareoverflow.mealtimer.fragments.MealWizardFragment;
 import com.softwareoverflow.mealtimer.fragments.mealItems.SavedMealItemsFragment;
 
@@ -25,7 +25,7 @@ public class MealItemsControllerPagerAdapter extends FragmentPagerAdapter {
         switch (i) {
             case 0: return new AddMealItemsFragment();
             case 1: return new SavedMealItemsFragment();
-            case 2: return new CreateMealItemFragment();
+            case 2: return new EditMealItemFragment();
             //TODO - case x: return new CreateMealItemStageFragment();??
             default: return null;
         }

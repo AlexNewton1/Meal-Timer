@@ -38,7 +38,6 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
         mealItemControllerPager.setCurrentItem(mealItemControllerPager.getCurrentItem() + 1);
     }
 
-    @Override
     public void onBackButtonClicked() {
         int currentItem = mealItemControllerPager.getCurrentItem();
 
@@ -51,7 +50,6 @@ public class MealItemControllerFragment extends MealWizardFragment implements Vi
             mealItemControllerPager.setCurrentItem(currentItem - 1);
     }
 
-    @Override
     public void onNextButtonClicked() {
         int currentItem = mealItemControllerPager.getCurrentItem();
 
